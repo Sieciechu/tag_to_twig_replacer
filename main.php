@@ -19,7 +19,7 @@ function run(string $text) : string
     $result = preg_replace_callback(
         $re,
         function($matches){
-            return "{% {$matches['tagName']} %}{$matches['inner']}{% blockend %}";
+            return "{% {$matches['tagName']} %}{$matches['inner']}{% endblock %}";
         },
         $text
     );
