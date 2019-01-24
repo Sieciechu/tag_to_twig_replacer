@@ -1,17 +1,17 @@
 <?php
+const NUMBER_OF_ITERATIONS = 300000;
 $start = time();
 $str = '[subject]Czym jest Lorem Ipsum?[/subject]
 [body]Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym.
 Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach [years]. [century] w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker[/body]';
 
-for ($i = 0; $i < 300000; ++$i) {
+for ($i = 0; $i < NUMBER_OF_ITERATIONS; ++$i) {
     $result = run($str);
 }
 $end = time();
 $difference = $end - $start;
-var_dump($difference);
+Echo "It took $difference seconds".PHP_EOL;
 var_dump($result);
-
 
 function run(string $text) : string
 {
@@ -19,7 +19,7 @@ function run(string $text) : string
     $result = preg_replace_callback(
         $re,
         function($matches){
-            return "{% {$matches['tagName']} %}{$matches['inner']}{% endblock %}";
+            return "{% block {$matches['tagName']} %}{$matches['inner']}{% endblock %}";
         },
         $text
     );

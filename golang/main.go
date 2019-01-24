@@ -7,15 +7,15 @@ import (
 	"time"
 )
 
-const ITERATIONS int = 3000000
+const ITERATIONS int = 300000
 
 func main() {
+
+	var start = time.Now()
 
 	var str = `[subject]Czym jest Lorem Ipsum?[/subject]
 [body]Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym.
 Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektronicznym, pozostając praktycznie niezmienionym. Spopularyzował się w latach [years]. [century] w. wraz z publikacją arkuszy Letrasetu, zawierających fragmenty Lorem Ipsum, a ostatnio z zawierającym różne wersje Lorem Ipsum oprogramowaniem przeznaczonym do realizacji druków na komputerach osobistych, jak Aldus PageMaker[/body]`
-
-	var start = time.Now()
 
 
 	//var result string
@@ -24,22 +24,23 @@ Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia
 	//}
 
 	c := make(chan string)
-	var GOROUTINES_NUMBER = 5000
+	var GOROUTINES_NUMBER = 800
+	fmt.Printf("Goroutines amount %v \n", GOROUTINES_NUMBER)
 	for i := 0; i < GOROUTINES_NUMBER; i++ {
 		go run3(str, c, GOROUTINES_NUMBER)
 	}
 	var result = <- c
 
-	fmt.Printf("%v\n", result)
 	fmt.Printf("Run took %v seconds\n", time.Now().Unix()-start.Unix())
+	fmt.Printf("%v\n", result)
 }
 
 func run3(text string, c chan string, goroutinesNumber int) {
 	var result string
 	size := ITERATIONS / goroutinesNumber
 	for i := 0; i < size; i++ {
-		//result = replaceTagWithTwigBlockReplacerVersion(text)
-		result = replaceTagWithTwigBlockRegexpVersion(text)
+		result = replaceTagWithTwigBlockReplacerVersion(text)
+		//result = replaceTagWithTwigBlockRegexpVersion(text)
 		result = replaceTagWithTwigBraces(result)
 	}
 
